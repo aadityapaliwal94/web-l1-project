@@ -10,7 +10,7 @@ export default function SliderImage({ caresoul_images, currentIndex }) {
         >
           <img
             src={item.url}
-            alt={item.altDesc}
+            alt={item.title}
             className="h-full w-full object-cover"
           />
         </div>
