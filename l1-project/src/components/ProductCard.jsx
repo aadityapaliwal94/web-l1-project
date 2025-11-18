@@ -8,7 +8,7 @@ export default function ProductCard({product}) {
                 <h4 className="text-sm font-thin mt-2">From ${product.price}</h4>
             </div>
             <div className="absolute bottom-5 right-8">
-                <button className="rounded-full bg-gray-300 p-5 text-black active:scale-95 text-lg">Buy</button>
+                <button className="rounded-full bg-gray-300 p-4 text-black active:scale-95 text-lg">Buy</button>
             </div>
         </div>
     )
