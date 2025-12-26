@@ -6,12 +6,19 @@ import Dots from "../components/Dots"
 import ProductCard from "../components/ProductCard"
 import SectionTitle from "../components/SectionTitle"
 import SponsersCard from "../components/SponsersCard"
-import { Link } from "react-router-dom"
 import Footer from "../components/Footer"
+import BuyProductPopup from "../components/BuyProductPopup"
+import SuccessPopup from "../components/SuccessPopup"
+import { useLocalStorageArray } from "../hooks/useLocalStorageArray"
 
 const HomePage = () => {
 
     const [currentIndex, setCurrentIndex] = useState(0)
+    const [showBuyPopup, setShowBuyPopup] = useState(false)
+    const [showSuccess, setShowSuccess] = useState(false)
+    const [buyingItem, setBuyingItem] = useState({})
+
+    const {addItem} = useLocalStorageArray("buyers", [])
 
     const caresoul_images = [
         {
@@ -96,9 +103,7 @@ const HomePage = () => {
             url: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/homepod-select-midnight-202210?wid=400&hei=400&fmt=jpeg&qlt=90&.v=N0JQcmtNWnVWeGozUXcxK2ZBcC9vUWxZUW9uUDlJNzU0RkU2VmwwNjZiSVZOYmZXUnpWekhFcFdLRUF2UkJ6V3ZvdUZlR0V0VUdJSjBWaDVNVG95Yk9DOFpxbkN3eGxiNlhoQmFhM0h0dms",            
             price: 32900.00
         },                          
-    ]
-
-    
+    ]    
 
     useEffect(() => {
         const timerId = setInterval(() => {
@@ -122,18 +127,19 @@ const HomePage = () => {
         setCurrentIndex(index)
     }
 
-    const onBuyButtonTap = () => {
-
+    const onBuyButtonTap = (item) => {
+        setBuyingItem(item)
+        setShowBuyPopup(true)
     }
 
     return (
-        <div className="h-auto bg-gray-100">
+        <div className="h-auto bg-gray-100">            
             <Navbar/>
             <div>
                 <div className="relative h-108 mb-30 shadow-2xl">                
                     <SliderImage caresoul_images={caresoul_images} currentIndex={currentIndex} />
                     <Arrow onLeftCheveronClick={onLeftCheveronClick} onRightCheveronClick={onRightCheveronClick} currentIndex={currentIndex} />                                        
-                    <button onClick={onBuyButtonTap} className="absolute bottom-5 px-10 w-50 h-12 rounded-ee-full bg-black/75 text-xl text-white active:opacity-50">Buy Now</button>
+                    <button onClick={() => onBuyButtonTap(caresoul_images[currentIndex])} className="absolute bottom-5 px-10 w-50 h-12 rounded-ee-full bg-black/75 text-xl text-white active:opacity-50">Buy Now</button>
                     <Dots caresoul_images={caresoul_images} currentIndex={currentIndex} goToSlide={goToSlide} />                                                         
                 </div>                
                 <div className="pb-10"> 
@@ -141,7 +147,7 @@ const HomePage = () => {
                     <div className="pl-30 pr-5 pb-18 flex gap-5 overflow-x-scroll flex-nowrap no-scrollbar">
                         {products.map((item, index) => {
                             return (
-                                <ProductCard key={"product "+ index} product={item} index={index} />
+                                <ProductCard key={"product "+ index} product={item} index={index} onBuyProduct={onBuyButtonTap} />
                             )
                         })}                                                                  
                     </div>
@@ -149,11 +155,25 @@ const HomePage = () => {
                     <div className="pl-30 pr-5 pb-18 flex gap-5 overflow-x-scroll flex-nowrap no-scrollbar">
                         {sponsers_data.map((item, index) => {
                             return (
-                                <SponsersCard key={"sponsers "+ index} product={item} index={index} />
+                                <SponsersCard key={"sponsers "+ index} product={item} index={index} onBuySponser={onBuyButtonTap} />
                             )
                         })}                                                                  
                     </div>
-                    <Footer />                                        
+                    <Footer />                    
+                    <BuyProductPopup item={buyingItem} show={showBuyPopup} onCloseTap={() => {
+                        setShowBuyPopup(false)
+                    }} onFormSubmit={(name, email, itemName) => {
+                        addItem({name:name, email:email, items: itemName})
+                        setBuyingItem({})
+                        setShowBuyPopup(false)
+                        setShowSuccess(true)
+                    }} />
+
+                    {showSuccess && (
+                        <SuccessPopup isOpen={true} message={"Thank you for the purchase."} onComplete={() => {
+                            setShowSuccess(false)
+                        }} />
+                    )}
                 </div>
             </div>            
         </div>

@@ -1,6 +1,6 @@
 const BillingDashboardPage = () => {
     return (
-        <div>
+        <div className="bg-amber-200">
             This is Billing dashboard
         </div>
     )
