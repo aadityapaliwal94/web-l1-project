@@ -3,9 +3,9 @@ import { useLocalStorageArray } from "../hooks/useLocalStorageArray"
 import { useMemo, useState } from "react"
 import { showInfoToast } from "../utils/helper"
 import { ToastContainer } from "react-toastify"
-import TableView from "../components/TableView"
 import PaginationView from "../components/PaginationView"
 import MostBoughtCard from "../components/MostBoughtCard"
+import InvoiceList from "../components/InvoiceList"
 
 const BillingDashboardPage = () => {
     const col_data = [
@@ -46,6 +46,9 @@ const BillingDashboardPage = () => {
     const _onPrevButtonTap = () => {
         if (pageNumber > 0) {
             setPageNumber(prev => prev - 1)
+            if (pageNumber - 1 === 0) {
+                setIsPrevButtonEnabled(false)
+            }
         } else {
             showInfoToast("No more data available")
             setIsPrevButtonEnabled(false)
@@ -74,8 +77,8 @@ const BillingDashboardPage = () => {
                     ))}
                 </div>
             )}
-            <div className="flex-1 overflow-auto">                
-                <TableView colData={col_data} listData={invoiceList} />
+            <div className="flex-1 overflow-auto mt-10">                                
+                <InvoiceList list={invoiceList} col_data={col_data} />                
             </div>
             <PaginationView pageNumber={pageNumber} _onPrevButtonTap={_onPrevButtonTap} _onNextButtonTap={_onNextButtonTap} isPrevButtonEnabled={isPrevButtonEnabled} isNextButtonEnabled={isNextButtonEnabled} />
             <ToastContainer />            
