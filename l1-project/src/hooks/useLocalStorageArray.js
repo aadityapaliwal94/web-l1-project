@@ -4,13 +4,16 @@ const isBrowser = typeof window !== "undefined";
 
 export function useLocalStorageArray(key, initialValue = []) {
   // pageNumber should start from 0.
-  const getItems = (pageNumber = 0, size = 5) => {
+  const getItems = (pageNumber = 0, size = 5, descOrder = false) => {
     if (!isBrowser) return initialValue;
 
     try {
       const item = window.localStorage.getItem(key);
       const parsed = item ? JSON.parse(item) : initialValue;
-      const data = Array.isArray(parsed) ? parsed : initialValue;
+      var data = Array.isArray(parsed) ? parsed : initialValue;
+      if (descOrder) {
+        data = data.reverse()
+      }
       if (data.length > size) {
         const startIndex = pageNumber * size
         const endNumber = (startIndex + size)

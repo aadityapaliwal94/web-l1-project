@@ -1,8 +1,9 @@
-import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useLocalStorageArray } from "../hooks/useLocalStorageArray"
 import { useMemo, useState } from "react"
 import { showInfoToast } from "../utils/helper"
 import { ToastContainer } from "react-toastify"
+import TableView from "../components/TableView"
+import PaginationView from "../components/PaginationView"
 
 const UsersDashboardPage = () => {
     const col_data = [
@@ -49,52 +50,9 @@ const UsersDashboardPage = () => {
                 Manage
             </h1>
             <div className="flex-1 overflow-auto">                
-                <table className="mt-10 w-full table-fixed border border-solid border-gray-100 text-center">
-                    <thead className="bg-gray-100 h-10">
-                        <tr>
-                            {col_data.map((col) => {
-                                return (
-                                    <th key={col.key} className="px-6 py-3 font-medium">
-                                        {col.label}
-                                    </th>
-                                )
-                            })}                            
-                        </tr>
-                    </thead>
-                    <tbody className="h-10">
-                        {usersList.map((row, index) => {
-                            return (
-                                <tr key={index} className="border-b border-gray-100">
-                                    {col_data.map((col, index) => {
-                                        return (
-                                            <td key={index} className="px-6 py-4 font-light">
-                                                {row[col.key]}
-                                            </td>
-                                        )
-                                    })}
-                                </tr>
-                            )
-                        })}                                             
-                    </tbody>
-                </table>                                
+                <TableView colData={col_data} listData={usersList} />
             </div>
-            <div className="flex justify-center gap-10 py-6 border-t border-gray-200">
-                <button 
-                    disabled={!isPrevButtonEnabled}                    
-                    className={isPrevButtonEnabled ? "h-12 bg-blue-400 px-4 py-3 rounded border-none flex justify-center items-center gap-2 hover:bg-blue-300 transition-colors" : "h-12 bg-gray-100 px-4 py-3 rounded border-none flex justify-center items-center gap-2" } 
-                    onClick={_onPrevButtonTap}>
-                    <ChevronLeft className="w-6 h-6 text-gray-800"/> 
-                    Previous
-                </button>
-                <span className="self-center">Page {pageNumber + 1}</span>
-                <button 
-                    disabled={!isNextButtonEnabled}
-                    className={isNextButtonEnabled ? "h-12 bg-blue-400 px-4 py-3 rounded border-none flex justify-center items-center gap-2 hover:bg-blue-300 transition-colors" : "h-12 bg-gray-100 px-4 py-3 rounded border-none flex justify-center items-center gap-2"}
-                    onClick={_onNextButtonTap}>
-                    Next 
-                    <ChevronRight className="w-6 h-6 text-gray-800"/>
-                </button>
-            </div>
+            <PaginationView pageNumber={pageNumber} _onPrevButtonTap={_onPrevButtonTap} _onNextButtonTap={_onNextButtonTap} isPrevButtonEnabled={isPrevButtonEnabled} isNextButtonEnabled={isNextButtonEnabled} />
             <ToastContainer />            
         </div>
     )

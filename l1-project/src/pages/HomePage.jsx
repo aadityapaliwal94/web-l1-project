@@ -19,6 +19,7 @@ const HomePage = () => {
     const [buyingItem, setBuyingItem] = useState({})
 
     const {addItem} = useLocalStorageArray("buyers", [])
+    const invoicesData = useLocalStorageArray("invoices", [])    
 
     const caresoul_images = [
         {
@@ -164,6 +165,8 @@ const HomePage = () => {
                         setShowBuyPopup(false)
                     }} onFormSubmit={(name, email, itemName) => {
                         addItem({name:name, email:email, items: itemName})
+                        const id = invoicesData.items.length + 1
+                        invoicesData.addItem({id: id, product: itemName, email: email, date: Date(), status: "purchased"})
                         setBuyingItem({})
                         setShowBuyPopup(false)
                         setShowSuccess(true)
