@@ -1,9 +1,10 @@
 import { useLocalStorageArray } from "../hooks/useLocalStorageArray"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { showInfoToast } from "../utils/helper"
 import { ToastContainer } from "react-toastify"
 import TableView from "../components/TableView"
 import PaginationView from "../components/PaginationView"
+import { PAGE_SIZE } from "../utils/constants"
 
 const UsersDashboardPage = () => {
     const col_data = [
@@ -18,31 +19,32 @@ const UsersDashboardPage = () => {
     const [isNextButtonEnabled, setIsNextButtonEnabled] = useState(true)
     
     const usersList = useMemo(() => {
-        const list = getItems(pageNumber)
+        const list = getItems(pageNumber, PAGE_SIZE)
         console.log("Buyers " + JSON.stringify(list))
         return list
     }, [pageNumber, getItems])
 
+    useEffect(() => {
+        if (usersList.length < PAGE_SIZE) {
+            setIsNextButtonEnabled(false)
+        } else {
+            setIsNextButtonEnabled(true)
+        }
+    }, [usersList])
+
     const _onPrevButtonTap = () => {
         if (pageNumber > 0) {
             setPageNumber(prev => prev - 1)
-        } else {
-            showInfoToast("No more data available")
-            setIsPrevButtonEnabled(false)
+            if (pageNumber - 1 === 0) {
+                setIsPrevButtonEnabled(false)
+            }
         }
-        setIsNextButtonEnabled(true)
     }
 
-    const _onNextButtonTap = () => {
-        const nextPageItems = getItems(pageNumber + 1)
-        if (nextPageItems.length > 0) {
-            setIsPrevButtonEnabled(true)
-            setPageNumber(prev => prev + 1)
-        } else {
-            showInfoToast("No more data available")            
-            setIsNextButtonEnabled(false)
-        }
-    }
+    const _onNextButtonTap = () => {    
+        setIsPrevButtonEnabled(true)
+        setPageNumber(prev => prev + 1)        
+    }    
 
     return (
         <div className="h-screen px-10 flex flex-col">
@@ -52,7 +54,10 @@ const UsersDashboardPage = () => {
             <div className="flex-1 overflow-auto">                
                 <TableView colData={col_data} listData={usersList} />
             </div>
-            <PaginationView pageNumber={pageNumber} _onPrevButtonTap={_onPrevButtonTap} _onNextButtonTap={_onNextButtonTap} isPrevButtonEnabled={isPrevButtonEnabled} isNextButtonEnabled={isNextButtonEnabled} />
+            {(usersList.length != 0 || pageNumber != 0) &&
+                <PaginationView pageNumber={pageNumber} _onPrevButtonTap={_onPrevButtonTap} _onNextButtonTap={_onNextButtonTap} isPrevButtonEnabled={isPrevButtonEnabled} isNextButtonEnabled={isNextButtonEnabled} />
+            }
+            
             <ToastContainer />            
         </div>
     )

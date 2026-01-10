@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { PAGE_SIZE } from "../utils/constants";
 
 const isBrowser = typeof window !== "undefined";
 
 export function useLocalStorageArray(key, initialValue = []) {
   // pageNumber should start from 0.
-  const getItems = (pageNumber = 0, size = 5, descOrder = false) => {
+  const getItems = (pageNumber = 0, size = PAGE_SIZE, descOrder = false) => {
     if (!isBrowser) return initialValue;
 
     try {

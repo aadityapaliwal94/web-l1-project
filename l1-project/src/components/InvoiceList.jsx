@@ -47,7 +47,7 @@ const InvoiceList = ({list, col_data}) => {
                 </div>
             ))
         ) : (
-            <div className="col-span-full text-center py-12 text-gray-500">
+            <div className="h-full col-span-full text-center py-12 text-gray-500">
                 No invoices found
             </div>
         )}

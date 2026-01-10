@@ -1,11 +1,12 @@
 
 import { useLocalStorageArray } from "../hooks/useLocalStorageArray"
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect } from "react"
 import { showInfoToast } from "../utils/helper"
 import { ToastContainer } from "react-toastify"
 import PaginationView from "../components/PaginationView"
 import MostBoughtCard from "../components/MostBoughtCard"
 import InvoiceList from "../components/InvoiceList"
+import { PAGE_SIZE } from "../utils/constants"
 
 const BillingDashboardPage = () => {
     const col_data = [
@@ -22,10 +23,19 @@ const BillingDashboardPage = () => {
     const [isNextButtonEnabled, setIsNextButtonEnabled] = useState(true)
     
     const invoiceList = useMemo(() => {
-        const list = getItems(pageNumber, 5, true)
+        const list = getItems(pageNumber, PAGE_SIZE, true)
         console.log("Invoices " + JSON.stringify(list))
+        
         return list
     }, [pageNumber, getItems])
+
+    useEffect(() => {
+        if (invoiceList.length < PAGE_SIZE) {
+            setIsNextButtonEnabled(false)
+        } else {
+            setIsNextButtonEnabled(true)
+        }
+    }, [invoiceList])
 
     const topProducts = useMemo(() => {
         if (!items || items.length === 0) return []
@@ -49,22 +59,12 @@ const BillingDashboardPage = () => {
             if (pageNumber - 1 === 0) {
                 setIsPrevButtonEnabled(false)
             }
-        } else {
-            showInfoToast("No more data available")
-            setIsPrevButtonEnabled(false)
         }
-        setIsNextButtonEnabled(true)
     }
 
-    const _onNextButtonTap = () => {
-        const nextPageItems = getItems(pageNumber + 1)
-        if (nextPageItems.length > 0) {
-            setIsPrevButtonEnabled(true)
-            setPageNumber(prev => prev + 1)
-        } else {
-            showInfoToast("No more data available")            
-            setIsNextButtonEnabled(false)
-        }
+    const _onNextButtonTap = () => {    
+        setIsPrevButtonEnabled(true)
+        setPageNumber(prev => prev + 1)        
     }
 
     return (
@@ -80,7 +80,9 @@ const BillingDashboardPage = () => {
             <div className="flex-1 overflow-auto mt-10">                                
                 <InvoiceList list={invoiceList} col_data={col_data} />                
             </div>
-            <PaginationView pageNumber={pageNumber} _onPrevButtonTap={_onPrevButtonTap} _onNextButtonTap={_onNextButtonTap} isPrevButtonEnabled={isPrevButtonEnabled} isNextButtonEnabled={isNextButtonEnabled} />
+            {(invoiceList.length != 0 || pageNumber != 0) &&
+                <PaginationView pageNumber={pageNumber} _onPrevButtonTap={_onPrevButtonTap} _onNextButtonTap={_onNextButtonTap} isPrevButtonEnabled={isPrevButtonEnabled} isNextButtonEnabled={isNextButtonEnabled} />
+            }            
             <ToastContainer />            
         </div>
     )
