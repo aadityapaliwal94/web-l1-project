@@ -1,26 +1,39 @@
 import { useEffect, useState } from "react";
 import Popup from "./Popup"
 
-const SuccessPopup = ({message, onComplete, isOpen}) => {
+interface SuccessPopupProps {
+    message: string;
+    onComplete: () => void;
+    isOpen: boolean;
+}
 
-    const [seconds, setSeconds] = useState(10)
+const SuccessPopup = ({message, onComplete, isOpen}: SuccessPopupProps) => {
+
+    const [seconds, setSeconds] = useState<number>(10)
 
     useEffect(() => {
+        if (!isOpen) {
+            setSeconds(10);
+            return;
+        }
+
         const timerId = setInterval(() => {
-            setSeconds((prev) => prev - 1)            
+            setSeconds((prev) => {
+                if (prev <= 1) {
+                    onComplete();
+                    return 0;
+                }
+                return prev - 1;
+            });
         }, 1000);
-        return () => clearInterval(timerId)
-    }, []);
-
-
-    if (seconds <= 0) {
-        onComplete()
-    }
+        
+        return () => clearInterval(timerId);
+    }, [isOpen, onComplete]);
 
     const suffix = seconds > 1 ? "seconds" : "second"
 
     return (
-        <Popup isOpen={isOpen} hideCrossButton={true}>
+        <Popup isOpen={isOpen} hideCrossButton={true} onClose={() => {}}>
             <div className="flex flex-col w-70 ">            
                 <h2 className="font-bold text-2xl">Success!</h2>
                 <p className="mt-2">{message}</p>

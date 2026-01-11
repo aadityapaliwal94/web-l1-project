@@ -13,7 +13,7 @@ export default function BuyProductPopup({item, show, onCloseTap, onFormSubmit}) 
     return (
         <Popup isOpen={show} onClose={onCloseTap} >
             <>
-            <h1 className="text-xl text-center mb-5">Buy {item.title ? item.title : ""}</h1>
+            <h1 className="text-lg md:text-xl text-center mb-4 md:mb-5 text-theme-primary px-2">Buy {item.title ? item.title : ""}</h1>
                 <form onSubmit={(e) => {
                 e.preventDefault()
                 if (name.length <= 0) {
@@ -31,25 +31,25 @@ export default function BuyProductPopup({item, show, onCloseTap, onFormSubmit}) 
                     setEmailError("")
                 }                
                 }}>              
-                    <div className="flex flex-col gap-1 justify-center items-center">
+                    <div className="flex flex-col gap-1 justify-center items-center w-full">
                         <input type="text" value={name} onChange={(e) => {
                         setName(e.target.value)
                         if (nameError.length > 0){
                             setNameError("")
                         }
-                        }} placeholder="Name" className={`border rounded-xl w-100 h-10 pl-5 outline-none ${nameError ? "border-red-400" : "border-gray-700"}`} /> 
-                        {nameError && <span className="self-start ml-5 text-sm text-red-500">{nameError}</span>}
+                        }} placeholder="Name" className={`input-base w-full max-w-xs md:max-w-sm lg:w-100 ${nameError ? "input-error" : ""}`} /> 
+                        {nameError && <span className="text-error self-start ml-2 md:ml-5 text-xs md:text-sm">{nameError}</span>}
 
-                        <input type="text" placeholder="Email" className={`border rounded-xl w-100 h-10 mt-2 pl-5 outline-none ${emailError ? "border-red-400" : "border-gray-700"}`} 
+                        <input type="text" placeholder="Email" className={`input-base w-full max-w-xs md:max-w-sm lg:w-100 mt-2 ${emailError ? "input-error" : ""}`} 
                         onChange={(e) => {
                             setEmail(e.target.value)
                             if (emailError.length > 0){
                             setEmailError("")
                             }
                         }}/> 
-                        {emailError && <span className="self-start ml-5 text-sm text-red-500">{emailError}</span>}
+                        {emailError && <span className="text-error self-start ml-2 md:ml-5 text-xs md:text-sm">{emailError}</span>}
                         
-                        <button className="text-xl bg-gray-300 w-30 px-5 py-2 mt-3 rounded-2xl active:scale-95">
+                        <button className="btn-primary text-base md:text-lg lg:text-xl w-full max-w-xs md:max-w-sm lg:w-30 mt-3 rounded-2xl">
                         Submit
                         </button>
                     </div>                

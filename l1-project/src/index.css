@@ -4,8 +4,90 @@
     * {
         padding: 0px;
         margin: 0px;
-        box-sizing: border-box,
-    }    
+        box-sizing: border-box;
+    }
+    
+    :root {
+        color-scheme: light;
+        
+        /* Background colors */
+        --color-background: #f5f5f5;
+        --color-background-secondary: #e5e5e5;
+        --color-background-tertiary: #d4d4d4;
+        
+        /* Surface colors (for cards, popups, etc.) */
+        --color-surface: #ffffff;
+        --color-surface-elevated: #ffffff;
+        
+        /* Text colors */
+        --color-text-primary: #000000;
+        --color-text-secondary: #525252;
+        --color-text-muted: #737373;
+        
+        /* Border colors */
+        --color-border: #d4d4d4;
+        --color-border-light: #e5e5e5;
+        --color-border-dark: #374151;
+        
+        /* Brand colors */
+        --color-primary: #2563eb;
+        --color-primary-light: #dbeafe;
+        
+        /* Accent colors */
+        --color-accent-red: #f87171;
+        --color-accent-amber: #d97706;
+        
+        /* Error colors */
+        --color-error: #fca5a5;
+        --color-error-text: #dc2626;
+        --color-error-border: #f87171;
+        
+        /* Overlay colors */
+        --color-overlay: rgba(0, 0, 0, 0.5);
+        --color-overlay-heavy: rgba(0, 0, 0, 0.75);
+    }
+
+
+    .dark,
+    [data-theme="dark"] {
+        color-scheme: dark;
+        
+        /* Background colors */
+        --color-background: #1a1a1a;
+        --color-background-secondary: #2a2a2a;
+        --color-background-tertiary: #3a3a3a;
+        
+        /* Surface colors */
+        --color-surface: #242424;
+        --color-surface-elevated: #2d2d2d;
+        
+        /* Text colors */
+        --color-text-primary: #ffffff;
+        --color-text-secondary: #a3a3a3;
+        --color-text-muted: #737373;
+        
+        /* Border colors */
+        --color-border: #404040;
+        --color-border-light: #2a2a2a;
+        --color-border-dark: #525252;
+        
+        /* Brand colors */
+        --color-primary: #3b82f6;
+        --color-primary-light: #1e3a8a;
+        
+        /* Accent colors */
+        --color-accent-red: #ef4444;
+        --color-accent-amber: #f59e0b;
+        
+        /* Error colors */
+        --color-error: #ef4444;
+        --color-error-text: #fca5a5;
+        --color-error-border: #ef4444;
+        
+        /* Overlay colors */
+        --color-overlay: rgba(0, 0, 0, 0.7);
+        --color-overlay-heavy: rgba(0, 0, 0, 0.85);
+    }
 }
 
 @layer utilities {
@@ -18,35 +100,147 @@
       -ms-overflow-style: none; /* IE and Edge */
       scrollbar-width: none; /* Firefox */
     }
+
+    .bg-theme-background {
+        background-color: var(--color-background);
+    }
+
+    .bg-theme-background-secondary {
+        background-color: var(--color-background-secondary);
+    }
+
+    .bg-theme-background-tertiary {
+        background-color: var(--color-background-tertiary);
+    }
+
+    .bg-theme-surface {
+        background-color: var(--color-surface);
+    }
+
+    .text-theme-primary {
+        color: var(--color-text-primary);
+    }
+
+    .text-theme-secondary {
+        color: var(--color-text-secondary);
+    }
+
+    .text-theme-muted {
+        color: var(--color-text-muted);
+    }
+
+    .border-theme {
+        border-color: var(--color-border);
+    }
+
+    .border-theme-light {
+        border-color: var(--color-border-light);
+    }
+
+    .border-theme-dark {
+        border-color: var(--color-border-dark);
+    }
 }
 
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
+@layer components {    
+    .popup-overlay {
+        @apply fixed top-0 left-0 w-full h-full flex justify-center items-center z-1000;
+        background-color: var(--color-overlay);
+    }
+    
+    .popup-content {
+        background-color: var(--color-surface);
+        @apply p-4 md:p-5 rounded-lg relative;
+        @apply w-[90%] max-w-md md:max-w-lg mx-auto;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
 
-.popup-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  position: relative;
-}
+    .dark .popup-content,
+    [data-theme="dark"] .popup-content {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .popup-close-button {
+        @apply absolute top-5 right-5;
+        @apply bg-transparent border-none text-2xl cursor-pointer;
+        color: var(--color-text-primary);
+        @apply hover:opacity-70 transition-opacity;
+    }
 
-.popup-close-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 1.5em;
-  cursor: pointer;
+    .btn-primary {
+        @apply px-5 py-2 rounded-full;
+        background-color: var(--color-background-tertiary);
+        color: var(--color-text-primary);
+        @apply active:scale-95 transition-transform;
+        @apply font-medium;
+    }
+
+    .btn-secondary {
+        @apply px-5 py-2 rounded-full;
+        @apply active:opacity-50 transition-opacity;
+        background-color: rgba(0, 0, 0, 0.75);
+        @apply text-white;
+    }
+
+    .dark .btn-secondary,
+    [data-theme="dark"] .btn-secondary {
+        background-color: rgba(255, 255, 255, 0.75);
+        @apply text-black;
+    }
+    
+    .card {
+        background-color: var(--color-surface);
+        border-color: var(--color-border-light);
+        @apply border rounded-lg p-5;
+        @apply shadow-sm;
+    }
+
+    .dark .card,
+    [data-theme="dark"] .card {
+        @apply shadow-lg;
+    }
+    
+    .input-base {
+        @apply border rounded-xl h-10 pl-5 outline-none;
+        border-color: var(--color-border-dark);
+        background-color: var(--color-surface);
+        color: var(--color-text-primary);
+        @apply transition-colors;
+    }
+
+    .input-base::placeholder {
+        color: var(--color-text-muted);
+    }
+
+    .dark .input-base::placeholder,
+    [data-theme="dark"] .input-base::placeholder {
+        color: var(--color-text-secondary);
+    }
+
+    .input-base:focus {
+        @apply ring-2;
+        --tw-ring-color: var(--color-primary);
+    }
+
+    .input-error {
+        border-color: var(--color-error-border);
+    }
+
+    .input-error:focus {
+        --tw-ring-color: var(--color-error-border);
+    }
+    
+    .text-error {
+        color: var(--color-error-text);
+        @apply text-sm;
+    }
+
+    .text-link {
+        @apply hover:underline underline-offset-8;
+        @apply transition-colors cursor-pointer;
+    }
+
+    .text-link:hover {
+        color: var(--color-accent-red);
+    }
 }

@@ -48,7 +48,7 @@ const UsersDashboardPage = () => {
 
     return (
         <div className="h-screen px-10 flex flex-col">
-            <h1 className="text-4xl font-bold pt-5">
+            <h1 className="text-4xl font-bold pt-5 text-theme-primary">
                 Manage
             </h1>
             <div className="flex-1 overflow-auto">                

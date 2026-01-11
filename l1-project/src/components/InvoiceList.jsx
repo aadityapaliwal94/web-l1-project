@@ -5,28 +5,28 @@ const InvoiceList = ({list, col_data}) => {
             list.map((invoice, index) => (
                 <div 
                     key={index}
-                    className="border border-gray-200 rounded-lg p-6 bg-white shadow-sm hover:shadow-md transition-shadow"
+                    className="card"
                 >
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div className="flex-1 space-y-2">
                             <div className="flex items-center gap-4">
                                 <div>
-                                    <span className="text-sm text-gray-500">{col_data[0].label}:</span>
-                                    <span className="ml-2 font-medium">{invoice[col_data[0].key]}</span>
+                                    <span className="text-sm text-theme-secondary">{col_data[0].label}:</span>
+                                    <span className="ml-2 font-medium text-theme-primary">{invoice[col_data[0].key]}</span>
                                 </div>
                             </div>
                             <div className="flex flex-wrap gap-4 text-sm">
                                 <div>
-                                    <span className="text-gray-500">{col_data[1].label}:</span>
-                                    <span className="ml-2 font-medium">{invoice[col_data[1].key]}</span>
+                                    <span className="text-theme-secondary">{col_data[1].label}:</span>
+                                    <span className="ml-2 font-medium text-theme-primary">{invoice[col_data[1].key]}</span>
                                 </div>
                                 <div>
-                                    <span className="text-gray-500">{col_data[2].label}:</span>
-                                    <span className="ml-2 font-medium">{invoice[col_data[2].key]}</span>
+                                    <span className="text-theme-secondary">{col_data[2].label}:</span>
+                                    <span className="ml-2 font-medium text-theme-primary">{invoice[col_data[2].key]}</span>
                                 </div>
                                 <div>
-                                    <span className="text-gray-500">{col_data[3].label}:</span>
-                                    <span className="ml-2 font-medium">{invoice[col_data[3].key]}</span>
+                                    <span className="text-theme-secondary">{col_data[3].label}:</span>
+                                    <span className="ml-2 font-medium text-theme-primary">{invoice[col_data[3].key]}</span>
                                 </div>
                             </div>
                         </div>
@@ -34,10 +34,10 @@ const InvoiceList = ({list, col_data}) => {
                             <span 
                                 className={`px-4 py-2 rounded-full text-sm font-medium ${
                                     invoice[col_data[4].key] === 'purchased' 
-                                        ? 'bg-green-100 text-green-800' 
+                                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
                                         : invoice[col_data[4].key] === 'Pending'
-                                        ? 'bg-yellow-100 text-yellow-800'
-                                        : 'bg-red-100 text-red-800'
+                                        ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                                        : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
                                 }`}
                             >
                                 {invoice[col_data[4].key]}
@@ -47,7 +47,7 @@ const InvoiceList = ({list, col_data}) => {
                 </div>
             ))
         ) : (
-            <div className="h-full col-span-full text-center py-12 text-gray-500">
+            <div className="h-full col-span-full text-center py-12 text-theme-muted">
                 No invoices found
             </div>
         )}

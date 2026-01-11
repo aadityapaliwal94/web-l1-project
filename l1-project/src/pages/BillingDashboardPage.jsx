@@ -69,7 +69,7 @@ const BillingDashboardPage = () => {
 
     return (
         <div className="h-screen px-10 flex flex-col">
-            <h1 className="text-4xl font-bold pt-5">Billing</h1>
+            <h1 className="text-4xl font-bold pt-5 text-theme-primary">Billing</h1>
             {topProducts.length > 0 && (
                 <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
                     {topProducts.map((item, index) => (
