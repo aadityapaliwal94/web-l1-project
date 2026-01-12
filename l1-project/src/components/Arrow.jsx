@@ -5,16 +5,16 @@ export default function Arrow({ onLeftCheveronClick, onRightCheveronClick }) {
         <>
             <button
                 onClick={onLeftCheveronClick}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
+                className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-1.5 md:p-2 rounded-full shadow-lg transition-all"
                 aria-label="Previous image">
-                <ChevronLeft className="w-6 h-6 text-gray-800" />
+                <ChevronLeft className="w-4 h-4 md:w-6 md:h-6" style={{ color: 'var(--color-text-primary)' }} />
             </button>
 
             <button
                 onClick={onRightCheveronClick}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
+                className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-1.5 md:p-2 rounded-full shadow-lg transition-all"
                 aria-label="Next image">
-                <ChevronRight className="w-6 h-6 text-gray-800" />
+                <ChevronRight className="w-4 h-4 md:w-6 md:h-6" style={{ color: 'var(--color-text-primary)' }} />
             </button>
         </>
     )
