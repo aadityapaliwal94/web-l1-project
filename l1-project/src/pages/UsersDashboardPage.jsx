@@ -1,6 +1,5 @@
 import { useLocalStorageArray } from "../hooks/useLocalStorageArray"
 import { useEffect, useMemo, useState } from "react"
-import { showInfoToast } from "../utils/helper"
 import { ToastContainer } from "react-toastify"
 import TableView from "../components/TableView"
 import PaginationView from "../components/PaginationView"
@@ -19,8 +18,7 @@ const UsersDashboardPage = () => {
     const [isNextButtonEnabled, setIsNextButtonEnabled] = useState(true)
     
     const usersList = useMemo(() => {
-        const list = getItems(pageNumber, PAGE_SIZE)
-        console.log("Buyers " + JSON.stringify(list))
+        const list = getItems(pageNumber, PAGE_SIZE)        
         return list
     }, [pageNumber, getItems])
 

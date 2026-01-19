@@ -17,7 +17,7 @@ export const PurchaseProvider = ({ children }) => {
     const [showSuccess, setShowSuccess] = useState(false);
 
     const { addItem: addBuyer } = useLocalStorageArray("buyers", []);
-    const { items: invoiceItems, addItem: addInvoice } = useLocalStorageArray("invoices", []);
+    const { addItem: addInvoice } = useLocalStorageArray("invoices", []);
 
     const handleBuyButtonTap = useCallback((item) => {
         setBuyingItem(item);
@@ -42,7 +42,7 @@ export const PurchaseProvider = ({ children }) => {
                 currentInvoiceCount = Array.isArray(parsed) ? parsed.length : 0;
             }
         } catch (error) {
-            console.warn("Error reading invoices from localStorage:", error);
+            console.error("Error reading invoices from localStorage:", error);
         }
 
         // Add invoice to localStorage
