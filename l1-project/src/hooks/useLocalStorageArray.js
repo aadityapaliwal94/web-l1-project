@@ -17,8 +17,7 @@ export function useLocalStorageArray(key, initialValue = []) {
       }
       if (data.length > size) {
         const startIndex = pageNumber * size
-        const endNumber = (startIndex + size)
-        console.log("startIndex " + startIndex + " endNumber " + endNumber)
+        const endNumber = (startIndex + size)        
         return data.slice(startIndex, endNumber)
       } else {
         if (pageNumber == 0) {
@@ -28,7 +27,7 @@ export function useLocalStorageArray(key, initialValue = []) {
         }        
       }
     } catch (error) {
-      console.warn(`Error reading localStorage key "${key}":`, error);
+      console.error(`Error reading localStorage key "${key}":`, error);
       return initialValue;
     }
   };
@@ -41,7 +40,7 @@ export function useLocalStorageArray(key, initialValue = []) {
       const parsed = item ? JSON.parse(item) : initialValue;
       return Array.isArray(parsed) ? parsed : initialValue;      
     } catch (error) {
-      console.warn(`Error reading localStorage key "${key}":`, error);
+      console.error(`Error reading localStorage key "${key}":`, error);
       return initialValue;
     }
   };

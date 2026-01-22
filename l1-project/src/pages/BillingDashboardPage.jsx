@@ -1,7 +1,6 @@
 
 import { useLocalStorageArray } from "../hooks/useLocalStorageArray"
 import { useMemo, useState, useEffect } from "react"
-import { showInfoToast } from "../utils/helper"
 import { ToastContainer } from "react-toastify"
 import PaginationView from "../components/PaginationView"
 import MostBoughtCard from "../components/MostBoughtCard"
@@ -23,8 +22,7 @@ const BillingDashboardPage = () => {
     const [isNextButtonEnabled, setIsNextButtonEnabled] = useState(true)
     
     const invoiceList = useMemo(() => {
-        const list = getItems(pageNumber, PAGE_SIZE, true)
-        console.log("Invoices " + JSON.stringify(list))
+        const list = getItems(pageNumber, PAGE_SIZE, true)        
         
         return list
     }, [pageNumber, getItems])

@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
 import Popup from "./Popup"
 
-interface SuccessPopupProps {
-    message: string;
-    onComplete: () => void;
-    isOpen: boolean;
-}
+const SuccessPopup = ({message, onComplete, isOpen}) => {
 
-const SuccessPopup = ({message, onComplete, isOpen}: SuccessPopupProps) => {
-
-    const [seconds, setSeconds] = useState<number>(10)
+    const [seconds, setSeconds] = useState(10)
 
     useEffect(() => {
         if (!isOpen) {
